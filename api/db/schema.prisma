@@ -16,3 +16,21 @@ model UserExample {
   email String  @unique
   name  String?
 }
+
+model PlanechaseImage {
+  id               String          @id @default(uuid())
+  name             String          @default("")
+  encodedString    String          @default("")
+  planechaseCard   PlanechaseCard? @relation(fields: [planechaseCardId], references: [id])
+  planechaseCardId String?         @unique
+}
+
+model PlanechaseCard {
+  id                      String           @id @default(uuid())
+  name                    String           @default("")
+  image                   PlanechaseImage?
+  plane                   String           @default("")
+  abilityDescription      String           @default("")
+  chaosAbilityDescription String           @default("")
+  planechaseImageId       String?
+}
