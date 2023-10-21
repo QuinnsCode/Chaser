@@ -1,6 +1,3 @@
-
-
-
 import {
   SignInButton,
   SignOutButton,
@@ -9,9 +6,10 @@ import {
 } from '@clerk/clerk-react'
 
 const Login = ({ currentUser }) => {
+  const currentUserObj = currentUser
   return (
     <div>
-      {currentUser ? (
+      {currentUserObj ? (
         <div className="rounded-2xl bg-black">
           <div className="inline-flex w-full flex-row-reverse px-2 opacity-40 hover:opacity-100">
             <UserButton afterSignOutUrl={window.location.href} />
@@ -41,29 +39,23 @@ const Login = ({ currentUser }) => {
               <></>
             )}
           </div> */}
+          <SignOutButton />
         </div>
       ) : (
         <>
-          <SignInButton
-            mode="modal"
-            className="rw-button pointer-events-auto mr-2 inline-flex bg-white font-thin text-black hover:bg-black hover:text-white"
-          />
-          <SignUpButton className="rw-button inline-flex bg-teal-800 font-thin text-white hover:bg-teal-900 hover:text-white" />
+          <SignInButton className="rw-button  pointer-events-auto ml-1 mr-3 inline-flex border-2 border-solid border-white bg-black font-thin text-white hover:bg-gray-600 hover:text-white" />
+          <SignUpButton className="rw-button pointer-events-auto my-1 mr-1 inline-flex border-2 border-solid border-white bg-black font-thin text-white hover:bg-gray-600 hover:text-white" />
         </>
       )}
-      {currentUser && (
+      {/* {currentUserObj && (
         <h1 className="bg-white font-thin text-black">
-          Hello{' '}
-          {currentUser?.firstName
-            ? currentUser.firstName
-            : currentUser.emailAddresses[0].emailAddress}
+          {currentUserObj?.firstName
+            ? currentUserObj.firstName
+            : currentUserObj.emailAddresses[0].emailAddress}
         </h1>
-      )}
+      )} */}
     </div>
   )
 }
 
 export default Login
-
-
-

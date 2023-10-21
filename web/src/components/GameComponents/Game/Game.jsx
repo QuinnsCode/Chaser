@@ -139,12 +139,12 @@ const Game = () => {
     <div className="h-screen w-full p-1 text-center">
       {!cardPool && <CardsCell returnCards={handleReturnedCards} />}
       {cardPool ? (
-        <div className="inline=flex my-1 w-full items-center rounded-2xl border-2 border-solid border-red-700 text-center">
+        <div className="inline=flex my-1 w-full items-center rounded-2xl text-center">
           <div className="inline-flex w-full items-center text-center">
             <div className="w-1/2 items-center text-center">
               <button
                 onClick={() => goToNextPlane()}
-                className="rw-button inline-flex items-center border-fuchsia-900 bg-black px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
+                className="rw-button inline-flex items-center bg-black px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
               >{`<< Prev`}</button>
             </div>
             <div className="w-1/2 p-1 text-center">
@@ -156,16 +156,16 @@ const Game = () => {
                     randomCardIndex?.now
                   )
                 }}
-                className="rw-button inline-flex items-center border-fuchsia-900 bg-black px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
+                className="rw-button inline-flex items-center bg-black px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
               >{`Next >>`}</button>
             </div>
           </div>
-          <div className="inline-flex w-full border border-fuchsia-950 p-1">
-            <div className="my-2 inline-flex h-[42rem] w-full content-center items-center justify-center border border-red-500 text-center align-middle">
+          <div className="inline-flex w-full rounded-md p-1">
+            <div className="my-2 inline-flex h-[42rem] w-full content-center items-center justify-center rounded-md pb-12 text-center align-middle shadow-2xl shadow-pink-700">
               <img
                 src={cardPool[randomCardIndex?.now]?.image?.encodedString}
                 alt={cardPool[randomCardIndex?.now]?.id}
-                className="m-2 max-h-full"
+                className="m-2 max-h-full rotate-0 rounded-md border-2 border-white shadow-2xl shadow-orange-400 ring-4 ring-pink-400 ring-opacity-40 sm:rotate-0 md:rotate-90 lg:rotate-90 xl:rotate-90 2xl:rotate-90"
               />
             </div>
           </div>

@@ -10,10 +10,15 @@ import FloatingMenu from 'src/components/FloatingMenu/FloatingMenu'
 const DefaultLayout = ({ children }) => {
   const { currentUser } = useAuth()
 
+  const firstName = currentUser?.id
+
+  console.log({firstName})
+
   const currentUserRef = useRef('')
 
   useEffect(() => {
     if (currentUser) {
+      console.log({currentUser})
       currentUserRef.current = currentUser
     }
   }, [currentUser])
