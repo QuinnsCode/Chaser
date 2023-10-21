@@ -1,7 +1,12 @@
 import { MetaTags } from '@redwoodjs/web'
 
 import Game from 'src/components/GameComponents/Game/Game'
+
+import { useAuth } from '@clerk/clerk-react'
+
 const GamePage = () => {
+  const {currentUser} = useAuth()
+
   return (
     <>
       <MetaTags title="Game" description="Game page" />

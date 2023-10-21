@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from 'react'
 
-import { useAuth } from '@clerk/clerk-react'
+
+import { useRef, useEffect } from 'react'
 
 import { Link, routes } from '@redwoodjs/router'
 
+import { useAuth } from 'src/auth'
 import FloatingMenu from 'src/components/FloatingMenu/FloatingMenu'
 
 const DefaultLayout = ({ children }) => {
@@ -20,7 +21,7 @@ const DefaultLayout = ({ children }) => {
   return (
     <>
       <header>
-        <nav>
+        {/* <nav>
           <ul>
             <li>
               <Link to={routes.dashboard()}>Dashboard</Link>
@@ -32,7 +33,7 @@ const DefaultLayout = ({ children }) => {
               <Link to={routes.home()}>Home</Link>
             </li>
           </ul>
-        </nav>
+        </nav> */}
       </header>
       <hr />
       <FloatingMenu currentUser={currentUser} />
@@ -46,3 +47,7 @@ const DefaultLayout = ({ children }) => {
 }
 
 export default DefaultLayout
+
+
+
+
