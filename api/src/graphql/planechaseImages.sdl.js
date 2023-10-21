@@ -8,8 +8,8 @@ export const schema = gql`
   }
 
   type Query {
-    planechaseImages: [PlanechaseImage!]! @requireAuth
-    planechaseImage(id: String!): PlanechaseImage @requireAuth
+    planechaseImages: [PlanechaseImage!]! @skipAuth
+    planechaseImage(id: String!): PlanechaseImage @skipAuth
   }
 
   input CreatePlanechaseImageInput {

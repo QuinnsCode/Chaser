@@ -10,8 +10,8 @@ export const schema = gql`
   }
 
   type Query {
-    planechaseCards: [PlanechaseCard!]! @requireAuth
-    planechaseCard(id: String!): PlanechaseCard @requireAuth
+    planechaseCards: [PlanechaseCard!]! @skipAuth
+    planechaseCard(id: String!): PlanechaseCard @skipAuth
   }
 
   input CreatePlanechaseCardInput {
