@@ -60,7 +60,7 @@ const FloatingMenu = ({ currentUser }) => {
           <>
             <div
               ref={menuRef}
-              className="absolute right-5 top-10 z-50 w-3/5 min-w-fit rounded-2xl border-2 border-solid border-white bg-black bg-opacity-80 px-1 text-right shadow-sm shadow-white transition duration-1000 ease-in-out sm:inline sm:w-fit md:inline md:w-fit lg:inline lg:w-fit xl:inline xl:w-fit 2xl:inline 2xl:w-fit"
+              className="absolute right-5 top-10 z-50 w-fit min-w-fit rounded-2xl border-2 border-solid border-white bg-black bg-opacity-80 px-1 text-right shadow-sm shadow-white transition duration-1000 ease-in-out sm:inline sm:w-fit md:inline md:w-fit lg:inline lg:w-fit xl:inline xl:w-fit 2xl:inline 2xl:w-fit"
             >
               {!currentUserObj && (
                 <div className="rounded-2xl bg-opacity-60 blur-none">

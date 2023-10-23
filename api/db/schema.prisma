@@ -11,10 +11,24 @@ generator client {
 // Define your own datamodels here and run `yarn redwood prisma migrate dev`
 // to create migrations for them and apply to your dev DB.
 // TODO: Please remove the following example:
-model UserExample {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model User {
+  id                 String                  @id @default(uuid())
+  thirdPartyID       String
+  email              String                  @unique
+  firstName          String?
+  lastName           String?
+  username           String                  @unique
+  connectionSettings UserConnectionSettings?
+  gameSettings       UserGameSettings?
+  games              SharedGame[]            @relation("Players")
+}
+
+model UserConnectionSettings {
+  id                      String  @id @default(uuid())
+  allowsMultiplayer       Boolean @default(false)
+  allowsChat              Boolean @default(false)
+  connectionSettings      User?   @relation(fields: [userConnectionSettingId], references: [id])
+  userConnectionSettingId String? @unique
 }
 
 model PlanechaseImage {
@@ -26,11 +40,40 @@ model PlanechaseImage {
 }
 
 model PlanechaseCard {
-  id                      String           @id @default(uuid())
-  name                    String           @default("")
+  id                      String                 @id @default(uuid())
+  name                    String                 @default("")
   image                   PlanechaseImage?
-  plane                   String           @default("")
-  abilityDescription      String           @default("")
-  chaosAbilityDescription String           @default("")
-  planechaseImageId       String?
+  plane                   String                 @default("")
+  abilityDescription      String                 @default("")
+  chaosAbilityDescription String                 @default("")
+  userGameSettings        UserGameSettings[]     @relation("CustomCards")
+  userGameSettings2       UserGameSettings[]     @relation("CommunityCards")
+  userGameSettings3       AdvancedGameSettings[] @relation("CardList")
+  userGameSettings4       SharedGame[]           @relation("Deck")
+  userGameSettings5       SharedGame[]           @relation("UsedCards")
+  createDate              DateTime               @default(now())
+}
+
+model SharedGame {
+  id        String           @id @default(uuid())
+  gameState String?          @default("")
+  players   User[]           @relation("Players")
+  deck      PlanechaseCard[] @relation("Deck")
+  usedCards PlanechaseCard[] @relation("UsedCards")
+}
+
+model UserGameSettings {
+  id                   String           @id @default(uuid())
+  cardSettings         String
+  customCards          PlanechaseCard[] @relation("CustomCards")
+  communityCustomCards PlanechaseCard[] @relation("CommunityCards")
+  gameSettings         User?            @relation(fields: [userGameSettingsId], references: [id])
+  userGameSettingsId   String?          @unique
+}
+
+model AdvancedGameSettings {
+  id       String           @id @default(uuid())
+  name     String
+  timed    Boolean
+  cardList PlanechaseCard[] @relation("CardList")
 }

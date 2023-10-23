@@ -4,7 +4,7 @@ import { useAuth } from 'src/auth'
 import Game from 'src/components/GameComponents/Game/Game'
 
 const GamePage = () => {
-  const { currentUser, isAuthenticated } = useAuth()
+  const { currentUser } = useAuth()
 
   return (
     <>
