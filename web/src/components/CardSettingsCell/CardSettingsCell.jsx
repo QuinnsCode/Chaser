@@ -18,6 +18,7 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ cardLibrary }) => {
+  //this loads in the default card library
   return (
     <div className="w-full">
       <UserGameSettingsCell cardLibrary={cardLibrary} />

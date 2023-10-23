@@ -10,6 +10,12 @@ export const user = ({ id }) => {
   })
 }
 
+export const userByThirdPartyId = ({ thirdPartyID }) => {
+  return db.user.findUnique({
+    where: { thirdPartyID },
+  })
+}
+
 export const createUser = ({ input }) => {
   return db.user.create({
     data: input,

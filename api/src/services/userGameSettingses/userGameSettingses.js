@@ -10,6 +10,13 @@ export const userGameSettings = ({ id }) => {
   })
 }
 
+// userGameSettingsThirdId
+export const userGameSettingsThirdId = ({ userGameSettingsThirdId }) => {
+  return db.userGameSettings.findUnique({
+    where: { userGameSettingsThirdId },
+  })
+}
+
 export const createUserGameSettings = ({ input }) => {
   return db.userGameSettings.create({
     data: input,
@@ -20,6 +27,14 @@ export const updateUserGameSettings = ({ id, input }) => {
   return db.userGameSettings.update({
     data: input,
     where: { id },
+  })
+}
+
+export const upsertUserGameSettings = ({ id, input }) => {
+  return db.userGameSettings.upsert({
+    where: { id },
+    create: input,
+    update: input,
   })
 }
 

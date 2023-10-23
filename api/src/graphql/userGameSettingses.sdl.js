@@ -11,6 +11,8 @@ export const schema = gql`
   type Query {
     userGameSettingses: [UserGameSettings!]! @requireAuth
     userGameSettings(id: String!): UserGameSettings @requireAuth
+    userGameSettingsThirdId(thirdPartyID: String!): UserGameSettings
+      @requireAuth
   }
 
   input CreateUserGameSettingsInput {
@@ -23,6 +25,11 @@ export const schema = gql`
     userGameSettingsId: String
   }
 
+  input UpsertUserGameSettingsInput {
+    cardSettings: String
+    userGameSettingsId: String
+  }
+
   type Mutation {
     createUserGameSettings(
       input: CreateUserGameSettingsInput!
@@ -30,6 +37,10 @@ export const schema = gql`
     updateUserGameSettings(
       id: String!
       input: UpdateUserGameSettingsInput!
+    ): UserGameSettings! @requireAuth
+    upsertUserGameSettings(
+      id: String
+      input: UpsertUserGameSettingsInput!
     ): UserGameSettings! @requireAuth
     deleteUserGameSettings(id: String!): UserGameSettings! @requireAuth
   }

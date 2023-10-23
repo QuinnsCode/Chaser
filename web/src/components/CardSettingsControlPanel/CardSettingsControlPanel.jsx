@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react'
 
+import Tooltip from 'src/components/Tooltip/Tooltip'
 import UserGameSettingsImageHoverCell from 'src/components/UserGameSettingsImageHoverCell/UserGameSettingsImageHoverCell'
 
-const CardSettingsControlPanel = ({ cardLibrary, cardSettings }) => {
+//cardLibrary comes from -----------
+//cardSettings comes from -----------
+//save comes from UserGamesSettingsCell
+//savedConfirmed comes from UserGamesSettingsCell
+const CardSettingsControlPanel = ({
+  cardLibrary,
+  cardSettings,
+  save,
+  savedConfirmed,
+}) => {
   //generate checklistState if there is not one else set it to what was
   //assume all include to start
 
@@ -30,6 +40,8 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings }) => {
   const cardSettingCardList = cardSettings ? [...cardSettings] : defaultCardList
 
   const [checkState, setCheckState] = useState(cardSettingCardList)
+
+  const [isSaving, setIsSaving] = useState(false)
 
   const handleOnOffCard = (id) => {
     const newState = [...checkState].map((card) => {
@@ -100,6 +112,27 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings }) => {
       >
         All On
       </button>
+      {!isSaving ? (
+        <button
+          onClick={() => {
+            const filtered = checkState.filter((card) => {
+              return card.isChecked
+            })
+
+            save(filtered)
+          }}
+          className={`rw-button m-1 inline-flex rounded-md border-2 border-solid bg-black text-white`}
+        >
+          Save
+        </button>
+      ) : (
+        <button
+          aria-disabled
+          className={`rw-button m-1 inline-flex rounded-md border-2 border-solid bg-black text-white`}
+        >
+          Saving
+        </button>
+      )}
       <hr />
       <div className="inline-flex text-white">Search:</div>
       <input
@@ -109,9 +142,9 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings }) => {
         }}
         className="m-1 inline-flex pl-1.5 text-black"
       />
-      <div className="inline-flex font-thin text-white">{`Hover over names of red, unchecked cards to see what they are`}</div>
+      <div className="inline-flex font-thin text-white">{`Click eye to see what excluded cards are`}</div>
       <hr />
-      <ul className="my-1.5 grid grid-cols-2 rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 2xl:grid-cols-4">
+      <ul className="my-1.5 grid grid-cols-2 rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-3">
         {checkState ? (
           checkState?.map((card) => {
             if (card.isVisible) {
@@ -130,53 +163,65 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings }) => {
               return (
                 <li
                   key={card.id}
-                  className={`my-1 w-full rounded-lg px-0.5 ${
+                  className={`w-full rounded-lg ${
                     card.isChecked ? bgColorString : 'border-white'
                   }`}
                 >
                   {card.isChecked ? (
                     <button
-                      onClick={(e) => {
-                        //"itemOnOff-" is the start of the string -> slice 10 off start, check for null id
-                        if (card.id) {
-                          if (e.target.id.includes('view-')) {
-                            setActiveId(card.id)
-                          } else {
-                            handleOnOffCard(card.id)
-                          }
-                        }
-                      }}
                       className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
                     >
                       <div
                         className={`inline-flex h-full w-2/3 items-center rounded-md border border-solid ${innerBorderColorString} font-thin`}
                       >
-                        <div className="w-full rounded-lg bg-black pl-1 text-center">
+                        <button
+                          onClick={() => {
+                            //"itemOnOff-" is the start of the string -> slice 10 off start, check for null id
+                            if (card.id) {
+                              handleOnOffCard(card.id)
+                            }
+                          }}
+                          className="w-full rounded-lg bg-black text-center"
+                        >
                           {card.name}
-                        </div>
-                        <div id={'view-' + card.id} className="">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="30"
-                            height="27"
-                            viewBox="0 0 100 100"
+                        </button>
+                        <div id={'view-' + card.id} className="px-1">
+                          <Tooltip
+                            text={'Show ' + card.name}
+                            leftRightAboveBelow={'right'}
                           >
-                            <circle
-                              cx="45"
-                              cy="45"
-                              r="40"
-                              fill="gray"
-                              stroke="black"
-                              strokeWidth="2"
-                            />
-
-                            <circle cx="47" cy="50" r="20" fill="black" />
-
-                            <circle cx="60" cy="30" r="5" fill="white" />
-                          </svg>
+                            <svg
+                              fill="#ffffff"
+                              width="20px"
+                              height="20px"
+                              viewBox="0 0 32 32"
+                              version="1.1"
+                              xmlns="http://www.w3.org/2000/svg"
+                              stroke="#ffffff"
+                            >
+                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                              <g
+                                id="SVGRepo_tracerCarrier"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              ></g>
+                              <g id="SVGRepo_iconCarrier">
+                                {' '}
+                                <title>open-eye</title>{' '}
+                                <path d="M0 16q0.064 0.192 0.192 0.512t0.576 1.248 0.992 1.888 1.344 2.176 1.792 2.368 2.144 2.176 2.592 1.888 2.976 1.248 3.392 0.512q2.208 0 4.288-0.768t3.616-2.016 2.912-2.72 2.304-3.008 1.6-2.72 0.96-1.984l0.32-0.8q-0.064-0.16-0.192-0.48t-0.576-1.28-0.992-1.856-1.344-2.208-1.792-2.336-2.144-2.176-2.56-1.888-3.008-1.28-3.392-0.48q-2.208 0-4.288 0.768t-3.616 2.016-2.912 2.72-2.304 2.976-1.6 2.72-0.96 2.016zM6.016 16q0-2.72 1.344-5.024t3.616-3.616 5.024-1.344q2.048 0 3.872 0.8t3.2 2.112 2.144 3.2 0.8 3.872q0 2.72-1.344 5.024t-3.648 3.648-5.024 1.344q-2.016 0-3.872-0.8t-3.2-2.144-2.144-3.168-0.768-3.904zM10.016 16q0 2.496 1.728 4.256t4.256 1.76 4.256-1.76 1.76-4.256-1.76-4.224-4.256-1.76q-0.96 0-1.984 0.352v3.648h-3.648q-0.352 0.992-0.352 1.984z"></path>{' '}
+                              </g>
+                            </svg>
+                          </Tooltip>
                         </div>
                       </div>
-                      <div className="inline-flex h-full w-1/4 items-center">
+                      <button
+                        onClick={() => {
+                          if (card.id) {
+                            handleOnOffCard(card.id)
+                          }
+                        }}
+                        className="inline-flex h-full w-1/4 items-center"
+                      >
                         <div className="mx-1 inline-flex text-center font-thin">
                           Add?
                         </div>
@@ -186,73 +231,83 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings }) => {
                           checked={card.isChecked}
                           className="shadow-md shadow-white"
                         />
-                      </div>
+                      </button>
                     </button>
                   ) : (
-                    <div id={'view-' + card.id}>
+                    <button
+                      className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
+                    >
                       <div
-                        className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
+                        className={`inline-flex h-full w-2/3 items-center rounded-md border border-solid ${innerBorderColorString} font-thin`}
                       >
-                        <div
-                          className={`inline-flex h-full w-2/3 items-center rounded-md border border-solid ${innerBorderColorString} font-thin`}
-                        >
-                          <div className="w-full rounded-lg bg-black pl-1 text-center">
-                            {card.name}
-                          </div>
-                          <button
-                            onClick={(e) => {
-                              if (card.id) {
-                                if (e.target.id.includes('view-')) {
-                                  setActiveId(card.id)
-                                } else {
-                                  setActiveId(card.id)
-                                  // handleOnOffCard(card.id)
-                                }
-                              }
-                            }}
-                            className=""
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="30"
-                              height="27"
-                              viewBox="0 0 100 100"
-                            >
-                              <circle
-                                cx="45"
-                                cy="45"
-                                r="40"
-                                fill="gray"
-                                stroke="black"
-                                strokeWidth="2"
-                              />
-
-                              <circle cx="47" cy="50" r="20" fill="black" />
-
-                              <circle cx="60" cy="30" r="5" fill="white" />
-                            </svg>
-                          </button>
-                        </div>
                         <button
                           onClick={() => {
+                            //"itemOnOff-" is the start of the string -> slice 10 off start, check for null id
                             if (card.id) {
                               handleOnOffCard(card.id)
                             }
                           }}
-                          className="inline-flex h-full w-1/4 items-center"
+                          className="w-full rounded-lg bg-black text-center"
                         >
-                          <div className="mx-1 inline-flex text-center font-thin">
-                            Add?
-                          </div>
-                          <input
-                            id={'itemOnOff-' + card.id}
-                            type={'checkbox'}
-                            checked={card.isChecked}
-                            className="shadow-md shadow-white"
-                          />
+                          {card.name}
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (card.id) {
+                              setActiveId(card.id)
+                            }
+                          }}
+                          id={'view-' + card.id}
+                          className="px-1"
+                        >
+                          <Tooltip
+                            text={'Show ' + card.name}
+                            leftRightAboveBelow={'right'}
+                          >
+                            <svg
+                              fill="#ffffff"
+                              width="20px"
+                              height="20px"
+                              viewBox="0 0 32 32"
+                              version="1.1"
+                              xmlns="http://www.w3.org/2000/svg"
+                              stroke="#ffffff"
+                            >
+                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                              <g
+                                id="SVGRepo_tracerCarrier"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              ></g>
+                              <g id="SVGRepo_iconCarrier">
+                                {' '}
+                                <title>open-eye</title>{' '}
+                                <path d="M0 16q0.064 0.192 0.192 0.512t0.576 1.248 0.992 1.888 1.344 2.176 1.792 2.368 2.144 2.176 2.592 1.888 2.976 1.248 3.392 0.512q2.208 0 4.288-0.768t3.616-2.016 2.912-2.72 2.304-3.008 1.6-2.72 0.96-1.984l0.32-0.8q-0.064-0.16-0.192-0.48t-0.576-1.28-0.992-1.856-1.344-2.208-1.792-2.336-2.144-2.176-2.56-1.888-3.008-1.28-3.392-0.48q-2.208 0-4.288 0.768t-3.616 2.016-2.912 2.72-2.304 2.976-1.6 2.72-0.96 2.016zM6.016 16q0-2.72 1.344-5.024t3.616-3.616 5.024-1.344q2.048 0 3.872 0.8t3.2 2.112 2.144 3.2 0.8 3.872q0 2.72-1.344 5.024t-3.648 3.648-5.024 1.344q-2.016 0-3.872-0.8t-3.2-2.144-2.144-3.168-0.768-3.904zM10.016 16q0 2.496 1.728 4.256t4.256 1.76 4.256-1.76 1.76-4.256-1.76-4.224-4.256-1.76q-0.96 0-1.984 0.352v3.648h-3.648q-0.352 0.992-0.352 1.984z"></path>{' '}
+                              </g>
+                            </svg>
+                          </Tooltip>
                         </button>
                       </div>
-                    </div>
+                      <button
+                        onClick={() => {
+                          //"itemOnOff-" is the start of the string -> slice 10 off start, check for null id
+                          if (card.id) {
+                            handleOnOffCard(card.id)
+                          }
+                        }}
+                        className="inline-flex h-full w-1/4 items-center"
+                      >
+                        <div className="mx-1 inline-flex text-center font-thin">
+                          Add?
+                        </div>
+                        <input
+                          id={'itemOnOff-' + card.id}
+                          type={'checkbox'}
+                          checked={card.isChecked}
+                          className="shadow-md shadow-white"
+                        />
+                      </button>
+                    </button>
                   )}
                 </li>
               )

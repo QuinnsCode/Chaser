@@ -64,10 +64,10 @@ model SharedGame {
 
 model UserGameSettings {
   id                   String           @id @default(uuid())
-  cardSettings         String
+  cardSettings         String?
   customCards          PlanechaseCard[] @relation("CustomCards")
   communityCustomCards PlanechaseCard[] @relation("CommunityCards")
-  gameSettings         User?            @relation(fields: [userGameSettingsId], references: [id])
+  userOfTheseSettings  User?            @relation(fields: [userGameSettingsId], references: [id])
   userGameSettingsId   String?          @unique
 }
 
