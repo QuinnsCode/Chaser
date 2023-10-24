@@ -55,21 +55,13 @@ export const Empty = ({ cardLibrary }) => {
     } catch (error) {
       console.error('Error updating UserGameSettings:', error)
     }
-    console.log({
-      variables: {
-        input: {
-          cardSettings: cardSettingsString,
-        },
-      },
-    })
   }
 
-  const handleSave = (things) => {
-    console.log({ things }, 'empty')
+  const handleSave = async (things) => {
     const jsonStr = JSON.stringify(things)
-    console.log({ jsonStr })
+    console.log({ things }, 'empty', { jsonStr })
     if (jsonStr) {
-      createUserGameSettings2(jsonStr)
+      await createUserGameSettings2(jsonStr)
     } else {
       console.log('bologna')
     }
@@ -105,22 +97,22 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ userGameSettings, cardLibrary, cardSettings }) => {
-  console.log({ cardSettings }, 'succ')
-
-  console.log({ userGameSettings, cardLibrary, cardSettings })
-
-  const convertedCardSettings = cardSettings
+export const Success = ({ userGameSettings, cardLibrary }) => {
+  const convertedCardSettings = userGameSettings[0].cardSettings
 
   const [upsertUserGameSettings] = useMutation(UPSERT_USER_GAME_SETTINGS)
 
   const upsertUserSettings = async (cardSettingsString, userGameSettings) => {
+    console.log({ userGameSettings })
+    const id = userGameSettings[0].id
+    console.log({ id })
+    const str = cardSettingsString
     try {
       const result = await upsertUserGameSettings({
         variables: {
-          id: userGameSettings[0].id,
+          id: id,
           input: {
-            cardSettings: cardSettingsString,
+            cardSettings: str,
           },
         },
       })
@@ -133,22 +125,13 @@ export const Success = ({ userGameSettings, cardLibrary, cardSettings }) => {
     } catch (error) {
       console.error('Error updating UserGameSettings:', error)
     }
-
-    console.log({
-      variables: {
-        id: userGameSettings?.id,
-        input: {
-          cardSettings: cardSettingsString,
-        },
-      },
-    })
   }
 
-  const handleSave = (things) => {
-    console.log({ things }, 'empty', JSON.stringify(things))
+  const handleSave = async (things) => {
+    console.log({ things }, 'success', JSON.stringify(things))
     const jsonStr = JSON.stringify(things)
     if (jsonStr) {
-      upsertUserSettings(jsonStr, userGameSettings)
+      await upsertUserSettings(jsonStr, userGameSettings)
     } else {
       return
     }

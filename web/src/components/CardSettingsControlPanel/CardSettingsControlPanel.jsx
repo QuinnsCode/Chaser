@@ -7,16 +7,14 @@ import UserGameSettingsImageHoverCell from 'src/components/UserGameSettingsImage
 //cardSettings comes from -----------
 //save comes from UserGamesSettingsCell
 //savedConfirmed comes from UserGamesSettingsCell
-const CardSettingsControlPanel = ({
-  cardLibrary,
-  cardSettings,
-  save,
-  savedConfirmed,
-}) => {
+const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
   //generate checklistState if there is not one else set it to what was
   //assume all include to start
 
+  console.log({ cardSettings }, { cardLibrary })
   const [inputValue, setInputValue] = useState('')
+
+  const [defaultOrCurrent, setDefaultOrCurrent] = useState(false)
 
   const [activeId, setActiveId] = useState('')
 
@@ -37,7 +35,9 @@ const CardSettingsControlPanel = ({
     return { ...card, isChecked: true, isVisible: true }
   })
 
-  const cardSettingCardList = cardSettings ? [...cardSettings] : defaultCardList
+  const cardSettingCardList = cardSettings?.length
+    ? [...cardSettings]
+    : defaultCardList
 
   const [checkState, setCheckState] = useState(cardSettingCardList)
 
@@ -76,7 +76,7 @@ const CardSettingsControlPanel = ({
     const handleChangeSearch = (textValue) => {
       const lowerCase = textValue?.toLowerCase()
       const cards = [...checkState]?.map((card) => {
-        if (card.name.toLowerCase().includes(lowerCase)) {
+        if (card.name?.toLowerCase().includes(lowerCase)) {
           return { ...card, isVisible: true }
         } else {
           return { ...card, isVisible: false }
@@ -115,7 +115,7 @@ const CardSettingsControlPanel = ({
       {!isSaving ? (
         <button
           onClick={() => {
-            const filtered = checkState.filter((card) => {
+            const filtered = [...checkState].filter((card) => {
               return card.isChecked
             })
 
@@ -133,6 +133,14 @@ const CardSettingsControlPanel = ({
           Saving
         </button>
       )}
+      <button
+        onClick={() => {
+          setCheckState(defaultCardList)
+        }}
+        className={`rw-button m-1 inline-flex rounded-md border-2 border-solid bg-black text-white`}
+      >
+        Default Cardlist
+      </button>
       <hr />
       <div className="inline-flex text-white">Search:</div>
       <input
@@ -185,7 +193,7 @@ const CardSettingsControlPanel = ({
                         >
                           {card.name}
                         </button>
-                        <div id={'view-' + card.id} className="px-1">
+                        {/* <div id={'view-' + card.id} className="px-1">
                           <Tooltip
                             text={'Show ' + card.name}
                             leftRightAboveBelow={'right'}
@@ -212,7 +220,7 @@ const CardSettingsControlPanel = ({
                               </g>
                             </svg>
                           </Tooltip>
-                        </div>
+                        </div> */}
                       </div>
                       <button
                         onClick={() => {
@@ -280,8 +288,7 @@ const CardSettingsControlPanel = ({
                                 strokeLinejoin="round"
                               ></g>
                               <g id="SVGRepo_iconCarrier">
-                                {' '}
-                                <title>open-eye</title>{' '}
+                                <title>open-eye</title>
                                 <path d="M0 16q0.064 0.192 0.192 0.512t0.576 1.248 0.992 1.888 1.344 2.176 1.792 2.368 2.144 2.176 2.592 1.888 2.976 1.248 3.392 0.512q2.208 0 4.288-0.768t3.616-2.016 2.912-2.72 2.304-3.008 1.6-2.72 0.96-1.984l0.32-0.8q-0.064-0.16-0.192-0.48t-0.576-1.28-0.992-1.856-1.344-2.208-1.792-2.336-2.144-2.176-2.56-1.888-3.008-1.28-3.392-0.48q-2.208 0-4.288 0.768t-3.616 2.016-2.912 2.72-2.304 2.976-1.6 2.72-0.96 2.016zM6.016 16q0-2.72 1.344-5.024t3.616-3.616 5.024-1.344q2.048 0 3.872 0.8t3.2 2.112 2.144 3.2 0.8 3.872q0 2.72-1.344 5.024t-3.648 3.648-5.024 1.344q-2.016 0-3.872-0.8t-3.2-2.144-2.144-3.168-0.768-3.904zM10.016 16q0 2.496 1.728 4.256t4.256 1.76 4.256-1.76 1.76-4.256-1.76-4.224-4.256-1.76q-0.96 0-1.984 0.352v3.648h-3.648q-0.352 0.992-0.352 1.984z"></path>{' '}
                               </g>
                             </svg>
