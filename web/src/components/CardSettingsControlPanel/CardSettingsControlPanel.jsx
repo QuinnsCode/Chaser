@@ -139,7 +139,6 @@ const CardSettingsControlPanel = ({
       <div className="inline-flex text-white">Search:</div>
       <input
         onChange={(e) => {
-          console.log(e.target.value)
           setInputValue(e.target.value)
         }}
         className="m-1 inline-flex pl-1.5 text-black"
@@ -170,7 +169,7 @@ const CardSettingsControlPanel = ({
                   }`}
                 >
                   {card.isChecked ? (
-                    <button
+                    <div
                       className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
                     >
                       <div
@@ -233,9 +232,9 @@ const CardSettingsControlPanel = ({
                           className="shadow-md shadow-white"
                         />
                       </button>
-                    </button>
+                    </div>
                   ) : (
-                    <button
+                    <div
                       className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
                     >
                       <div
@@ -308,7 +307,7 @@ const CardSettingsControlPanel = ({
                           className="shadow-md shadow-white"
                         />
                       </button>
-                    </button>
+                    </div>
                   )}
                 </li>
               )
