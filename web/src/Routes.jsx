@@ -9,10 +9,9 @@
 
 import { Router, Route, Set } from '@redwoodjs/router'
 
+import { useAuth } from 'src/auth'
 import DefaultLayout from 'src/layouts/DefaultLayout/DefaultLayout'
 import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
-
-import { useAuth } from './auth'
 
 const Routes = () => {
   return (
@@ -60,7 +59,6 @@ const Routes = () => {
         <Route path="/planechase-images" page={PlanechaseImagePlanechaseImagesPage} name="planechaseImages" />
       </Set>
       <Set wrap={DefaultLayout}>
-        {/* <Route path="/about" page={AboutPage} name="about" /> */}
         <Route path="/dashboard" page={DashboardPage} name="dashboard" />
         <Route path="/game" page={GamePage} name="game" />
         <Route path="/" page={HomePage} name="home" />

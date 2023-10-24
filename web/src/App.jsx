@@ -1,10 +1,9 @@
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 
+import { AuthProvider, useAuth } from 'src/auth'
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
-
-import { AuthProvider, useAuth } from './auth'
 
 import './scaffold.css'
 import './index.css'

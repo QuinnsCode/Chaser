@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { SignInButton, UserButton, useSession } from '@clerk/clerk-react'
+import { SignInButton, UserButton } from '@clerk/clerk-react'
 
 import { MetaTags } from '@redwoodjs/web'
 
@@ -22,9 +22,7 @@ const DashboardPage = () => {
           <div className="inline-flex w-full items-center">
             User Settings:
             {isAuthenticated ? (
-              <>
-                <UserButton afterSignOutUrl={window.location.href} />
-              </>
+              <UserButton afterSignOutUrl={window.location.href} />
             ) : (
               <SignInButton />
             )}

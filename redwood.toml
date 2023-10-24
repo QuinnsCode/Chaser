@@ -9,7 +9,7 @@
   title = "Redwood App"
   port = 8910
   apiUrl = "/api"
-  includeEnvironmentVariables = ['CLERK_PUBLISHABLE_KEY']
+  includeEnvironmentVariables = ["CLERK_PUBLISHABLE_KEY"]
 [api]
   port = 8911
 [browser]

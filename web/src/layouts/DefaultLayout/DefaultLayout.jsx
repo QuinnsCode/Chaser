@@ -1,15 +1,11 @@
+// import { Link, routes } from '@redwoodjs/router'
 import { useRef, useEffect } from 'react'
 
-// import { Link, routes } from '@redwoodjs/router'
 import { useAuth } from 'src/auth'
 import FloatingMenu from 'src/components/FloatingMenu/FloatingMenu'
 
 const DefaultLayout = ({ children }) => {
   const { currentUser } = useAuth()
-
-  const id = currentUser?.id
-
-  console.log({ id })
 
   const currentUserRef = useRef('')
 
@@ -19,7 +15,6 @@ const DefaultLayout = ({ children }) => {
       currentUserRef.current = currentUser
     }
   }, [currentUser])
-
   return (
     <>
       <header>
@@ -37,17 +32,15 @@ const DefaultLayout = ({ children }) => {
           </ul>
         </nav> */}
       </header>
-      <hr />
-      {currentUser?.id && (
-        <>
+
+      <main>
+        <div id="floating-menu-div">
           <FloatingMenu currentUser={currentUser} />
-          <main>
-            <div className="border-2 border-solid border-black text-black">
-              {children}
-            </div>
-          </main>
-        </>
-      )}
+        </div>
+        <div className="border-2 border-solid bg-black text-black">
+          {children}
+        </div>
+      </main>
     </>
   )
 }
