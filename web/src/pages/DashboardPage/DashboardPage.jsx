@@ -8,7 +8,7 @@ import { useAuth } from 'src/auth'
 import CardSettings from 'src/components/CardSettings/CardSettings'
 
 const DashboardPage = () => {
-  const { isAuthenticated } = useAuth()
+  const { currentUser } = useAuth()
 
   const [showCardSettings, setShowCardSettings] = useState(false)
 
@@ -21,7 +21,7 @@ const DashboardPage = () => {
         <div className="h-screen w-full">
           <div className="inline-flex w-full items-center">
             User Settings:
-            {isAuthenticated ? (
+            {currentUser ? (
               <UserButton afterSignOutUrl={window.location.href} />
             ) : (
               <SignInButton />
@@ -51,7 +51,7 @@ const DashboardPage = () => {
                   </button>
                 )}
               </div>
-              <div className="w-full">
+              {/* <div className="w-full">
                 {!showCardSettings ? (
                   <div className="rounded-2xl border-2 border-white px-1 py-2">
                     <CardSettings />
@@ -59,16 +59,11 @@ const DashboardPage = () => {
                 ) : (
                   <></>
                 )}
-              </div>
+              </div> */}
             </li>
             <hr />
             <li className="w-full hover:bg-gray-900">Friends List</li>
             <hr />
-            <li className="w-full hover:bg-gray-900">Friends List</li>
-            <hr />
-            <li className="w-full hover:bg-gray-900">Friends List</li>
-            <hr />
-            <li className="w-full hover:bg-gray-900">Friends List</li>
           </ul>
         </div>
       </div>

@@ -11,11 +11,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
   //generate checklistState if there is not one else set it to what was
   //assume all include to start
 
-  console.log({ cardSettings }, { cardLibrary })
   const [inputValue, setInputValue] = useState('')
-
-  const [defaultOrCurrent, setDefaultOrCurrent] = useState(false)
-
   const [activeId, setActiveId] = useState('')
 
   const alphabeticalCardLibrary = cardLibrary?.sort((a, b) => {
@@ -44,14 +40,16 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
   const [isSaving, setIsSaving] = useState(false)
 
   const handleOnOffCard = (id) => {
-    const newState = [...checkState].map((card) => {
-      if (card.id === id) {
-        return { ...card, isChecked: !card.isChecked }
-      } else {
-        return card
-      }
-    })
-    setCheckState(newState)
+    if (checkState) {
+      const newState = [...checkState].map((card) => {
+        if (card.id === id) {
+          return { ...card, isChecked: !card.isChecked }
+        } else {
+          return card
+        }
+      })
+      setCheckState(newState)
+    }
   }
 
   const allOn = () => {
@@ -59,6 +57,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
       return { ...card, isChecked: true, isVisible: true }
     })
     setCheckState(newState)
+    return
   }
 
   const allOff = () => {
@@ -66,6 +65,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
       return { ...card, isChecked: false, isVisible: true }
     })
     setCheckState(newState)
+    return
   }
 
   const handleCloseMe = () => {
@@ -115,7 +115,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
       {!isSaving ? (
         <button
           onClick={() => {
-            const filtered = [...checkState].filter((card) => {
+            const filtered = [...checkState]?.filter((card) => {
               return card.isChecked
             })
 
@@ -145,7 +145,6 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
       <div className="inline-flex text-white">Search:</div>
       <input
         onChange={(e) => {
-          console.log(e.target.value)
           setInputValue(e.target.value)
         }}
         className="m-1 inline-flex pl-1.5 text-black"
@@ -176,7 +175,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                   }`}
                 >
                   {card.isChecked ? (
-                    <button
+                    <div
                       className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
                     >
                       <div
@@ -184,7 +183,6 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                       >
                         <button
                           onClick={() => {
-                            //"itemOnOff-" is the start of the string -> slice 10 off start, check for null id
                             if (card.id) {
                               handleOnOffCard(card.id)
                             }
@@ -193,34 +191,6 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                         >
                           {card.name}
                         </button>
-                        {/* <div id={'view-' + card.id} className="px-1">
-                          <Tooltip
-                            text={'Show ' + card.name}
-                            leftRightAboveBelow={'right'}
-                          >
-                            <svg
-                              fill="#ffffff"
-                              width="20px"
-                              height="20px"
-                              viewBox="0 0 32 32"
-                              version="1.1"
-                              xmlns="http://www.w3.org/2000/svg"
-                              stroke="#ffffff"
-                            >
-                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                              <g
-                                id="SVGRepo_tracerCarrier"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              ></g>
-                              <g id="SVGRepo_iconCarrier">
-                                {' '}
-                                <title>open-eye</title>{' '}
-                                <path d="M0 16q0.064 0.192 0.192 0.512t0.576 1.248 0.992 1.888 1.344 2.176 1.792 2.368 2.144 2.176 2.592 1.888 2.976 1.248 3.392 0.512q2.208 0 4.288-0.768t3.616-2.016 2.912-2.72 2.304-3.008 1.6-2.72 0.96-1.984l0.32-0.8q-0.064-0.16-0.192-0.48t-0.576-1.28-0.992-1.856-1.344-2.208-1.792-2.336-2.144-2.176-2.56-1.888-3.008-1.28-3.392-0.48q-2.208 0-4.288 0.768t-3.616 2.016-2.912 2.72-2.304 2.976-1.6 2.72-0.96 2.016zM6.016 16q0-2.72 1.344-5.024t3.616-3.616 5.024-1.344q2.048 0 3.872 0.8t3.2 2.112 2.144 3.2 0.8 3.872q0 2.72-1.344 5.024t-3.648 3.648-5.024 1.344q-2.016 0-3.872-0.8t-3.2-2.144-2.144-3.168-0.768-3.904zM10.016 16q0 2.496 1.728 4.256t4.256 1.76 4.256-1.76 1.76-4.256-1.76-4.224-4.256-1.76q-0.96 0-1.984 0.352v3.648h-3.648q-0.352 0.992-0.352 1.984z"></path>{' '}
-                              </g>
-                            </svg>
-                          </Tooltip>
-                        </div> */}
                       </div>
                       <button
                         onClick={() => {
@@ -239,10 +209,24 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                           checked={card.isChecked}
                           className="shadow-md shadow-white"
                         />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          className="h-3 w-3"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
                       </button>
-                    </button>
+                    </div>
                   ) : (
-                    <button
+                    <div
                       className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
                     >
                       <div
@@ -314,7 +298,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                           className="shadow-md shadow-white"
                         />
                       </button>
-                    </button>
+                    </div>
                   )}
                 </li>
               )
