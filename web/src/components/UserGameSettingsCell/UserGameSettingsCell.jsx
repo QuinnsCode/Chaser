@@ -169,15 +169,12 @@ export const Success = ({ userGameSettings, cardLibrary }) => {
           </button>
         </div>
       </div>
-      {cardLibrary && userGameSettings ? (
-        <CardSettingsControlPanel
-          cardSettings={convertedCardSettings}
-          cardLibrary={cardLibrary}
-          save={handleSave}
-        />
-      ) : (
-        <></>
-      )}
+
+      <CardSettingsControlPanel
+        cardSettings={convertedCardSettings}
+        cardLibrary={cardLibrary}
+        save={handleSave}
+      />
     </div>
   )
 }

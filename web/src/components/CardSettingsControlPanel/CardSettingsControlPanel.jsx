@@ -7,9 +7,9 @@ import UserGameSettingsImageHoverCell from 'src/components/UserGameSettingsImage
 //cardSettings comes from -----------
 //save comes from UserGamesSettingsCell
 //savedConfirmed comes from UserGamesSettingsCell
+
 const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
-  //generate checklistState if there is not one else set it to what was
-  //assume all include to start
+  console.log({ cardLibrary }, { cardSettings })
 
   const [inputValue, setInputValue] = useState('')
   const [activeId, setActiveId] = useState('')
@@ -31,9 +31,10 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
     return { ...card, isChecked: true, isVisible: true }
   })
 
-  const cardSettingCardList = cardSettings?.length
-    ? [...cardSettings]
-    : defaultCardList
+  // const cardSettingCardList = cardSettings?.length
+  //   ? [...cardSettings]
+  //   : defaultCardList
+  const cardSettingCardList = null
 
   const [checkState, setCheckState] = useState(cardSettingCardList)
 
@@ -41,7 +42,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
 
   const handleOnOffCard = (id) => {
     if (checkState) {
-      const newState = [...checkState].map((card) => {
+      const newState = checkState?.map((card) => {
         if (card.id === id) {
           return { ...card, isChecked: !card.isChecked }
         } else {
@@ -53,7 +54,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
   }
 
   const allOn = () => {
-    const newState = [...checkState].map((card) => {
+    const newState = checkState?.map((card) => {
       return { ...card, isChecked: true, isVisible: true }
     })
     setCheckState(newState)
@@ -61,7 +62,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
   }
 
   const allOff = () => {
-    const newState = [...checkState].map((card) => {
+    const newState = checkState?.map((card) => {
       return { ...card, isChecked: false, isVisible: true }
     })
     setCheckState(newState)
@@ -75,7 +76,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
   useEffect(() => {
     const handleChangeSearch = (textValue) => {
       const lowerCase = textValue?.toLowerCase()
-      const cards = [...checkState]?.map((card) => {
+      const cards = checkState?.map((card) => {
         if (card.name?.toLowerCase()?.includes(lowerCase)) {
           return { ...card, isVisible: true }
         } else {
@@ -162,33 +163,58 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
       /> */}
       <div className="inline-flex font-thin text-white">{`Click eye to see what excluded cards are`}</div>
       <hr />
-      <ul className="my-1.5 grid grid-cols-2 rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-3">
-        {checkState ? (
-          checkState?.map((card) => {
-            if (card?.isVisible) {
-              const borderColorString = card.isChecked
-                ? 'border-green-600'
-                : 'border-red-600'
+      <ListCards checkState={checkState} />
+    </div>
+  )
+}
 
-              const innerBorderColorString = card.isChecked
-                ? 'border-emerald-500'
-                : 'border-white'
+export default CardSettingsControlPanel
 
-              const bgColorString = card.isChecked
-                ? 'bg-gradient-to-br from-slate-900 via-black to-green-900 hover:bg-gradient-to-br hover:from-black hover:via-emerald-900 hover:to-green-600'
-                : 'bg-gradient-to-br from-black via-black to-slate-700'
+const ListCards = ({ checkState }) => {
+  if (checkState) {
+    console.log({ checkState })
+    // return (
+    //   <ul className="my-1.5 grid grid-cols-2 rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-3">
+    //     {checkState ? (
+    //       checkState?.map((card) => {
+    //         if (card?.isVisible) {
+    //           const borderColorString = card?.isChecked
+    //             ? 'border-green-600'
+    //             : 'border-red-600'
 
-              return (
-                <li
-                  key={card.id}
-                  className={`w-full rounded-lg ${
-                    card.isChecked ? bgColorString : 'border-white'
-                  }`}
-                >
-                  {card.isChecked ? (
-                    <>
-                      Yea
-                      {/* <div
+    //           const innerBorderColorString = card?.isChecked
+    //             ? 'border-emerald-500'
+    //             : 'border-white'
+
+    //           const bgColorString = card?.isChecked
+    //             ? 'bg-gradient-to-br from-slate-900 via-black to-green-900 hover:bg-gradient-to-br hover:from-black hover:via-emerald-900 hover:to-green-600'
+    //             : 'bg-gradient-to-br from-black via-black to-slate-700'
+
+    //           return <ListElement key={card} />
+    //         } else {
+    //           return <>No 2</>
+    //         }
+    //       })
+    //     ) : (
+    //       <></>
+    //     )}
+    //   </ul>
+    // )
+  } else return <></>
+}
+
+const ListElement = ({ card, bgColorString }) => {
+  return (
+    <li
+      key={card.id}
+      className={`w-full rounded-lg ${
+        card?.isChecked ? bgColorString : 'border-white'
+      }`}
+    >
+      {card?.isChecked ? (
+        <>
+          Yea
+          {/* <div
                       className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
                     >
                       <div
@@ -238,11 +264,11 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                         </svg>
                       </button>
                     </div> */}
-                    </>
-                  ) : (
-                    <>
-                      Nooo
-                      {/* <div
+        </>
+      ) : (
+        <>
+          Nooo
+          {/* <div
                         className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
                       >
                         <div
@@ -308,20 +334,8 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                           />
                         </button>
                       </div> */}
-                    </>
-                  )}
-                </li>
-              )
-            } else {
-              return <>No 2</>
-            }
-          })
-        ) : (
-          <></>
-        )}
-      </ul>
-    </div>
+        </>
+      )}
+    </li>
   )
 }
-
-export default CardSettingsControlPanel

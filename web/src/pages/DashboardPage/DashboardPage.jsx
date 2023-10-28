@@ -17,9 +17,10 @@ const DashboardPage = () => {
       <MetaTags title="Dashboard" description="Dashboard page" />
 
       <h1>DashboardPage</h1>
+      <hr />
       <div className="w-full items-center border-2 border-solid border-gray-300 bg-black text-white">
         <div className="h-screen w-full">
-          <div className="inline-flex w-full items-center">
+          <div className="my-2 inline-flex w-full items-center">
             User Settings:
             {currentUser ? (
               <UserButton afterSignOutUrl={window.location.href} />
