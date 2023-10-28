@@ -168,11 +168,13 @@ export const Success = ({ userGameSettings, cardLibrary }) => {
         </div>
       </div>
 
-      <CardSettingsControlPanel
-        cardSettings={convertedCardSettings}
-        cardLibrary={cardLibrary}
-        save={handleSave}
-      />
+      {convertedCardSettings && (
+        <CardSettingsControlPanel
+          cardSettings={convertedCardSettings}
+          cardLibrary={cardLibrary}
+          save={handleSave}
+        />
+      )}
     </div>
   )
 }
