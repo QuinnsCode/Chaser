@@ -14,22 +14,22 @@ const CardChooserView = ({ cardSettings, cardLibrary }) => {
     }
   )
 
-  // const alphabeticalCardLibrary = cardLibrary?.sort((a, b) => {
-  //   const nameA = a.name.toUpperCase()
-  //   const nameB = b.name.toUpperCase()
+  const alphabeticalCardLibrary = cardLibrary.sort((a, b) => {
+    const nameA = a.name.toUpperCase()
+    const nameB = b.name.toUpperCase()
 
-  //   if (nameA < nameB) {
-  //     return -1
-  //   } else if (nameA > nameB) {
-  //     return 1
-  //   } else {
-  //     return 0
-  //   }
-  // })
+    if (nameA < nameB) {
+      return -1
+    } else if (nameA > nameB) {
+      return 1
+    } else {
+      return 0
+    }
+  })
 
-  // const defaultCardList = alphabeticalCardLibrary?.map((card) => {
-  //   return { ...card, isChecked: true, isVisible: true }
-  // })
+  const defaultCardList = alphabeticalCardLibrary.map((card) => {
+    return { ...card, isChecked: true, isVisible: true }
+  })
 
   // const cardSettingCardList = cardSettings?.length
   //   ? [...cardSettings]
