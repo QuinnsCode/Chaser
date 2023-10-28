@@ -24,5 +24,6 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ card, closeMe }) => {
-  return <InspectCardHoverUIPanel card={card} closeMe={closeMe} />
+  // return <InspectCardHoverUIPanel card={card} closeMe={closeMe} />
+  return <div>{JSON.stringify(card)}</div>
 }
