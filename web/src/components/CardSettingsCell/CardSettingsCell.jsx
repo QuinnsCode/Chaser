@@ -18,9 +18,10 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ planechaseCards }) => {
+  console.log({ planechaseCards })
   //this loads in the default card library
   return (
-    <div className="w-full">
+    <div className="w-full border-2 border-yellow-600">
       <UserGameSettingsCell cardLibrary={planechaseCards} />
     </div>
   )

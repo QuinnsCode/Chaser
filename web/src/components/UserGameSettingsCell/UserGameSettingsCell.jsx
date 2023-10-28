@@ -86,7 +86,10 @@ export const Empty = ({ cardLibrary }) => {
       </div>
       {cardLibrary ? (
         <>
-          {/* <CardSettingsControlPanel cardLibrary={cardLibrary} save={handleSave} /> */}
+          <CardSettingsControlPanel
+            cardLibrary={cardLibrary}
+            save={handleSave}
+          />
         </>
       ) : (
         <></>
@@ -100,7 +103,9 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ userGameSettings, cardLibrary }) => {
-  const convertedCardSettings = userGameSettings[0].cardSettings
+  const convertedCardSettings = JSON.parse(userGameSettings[0]?.cardSettings)
+
+  console.log({ userGameSettings }, { cardLibrary }, { convertedCardSettings })
 
   const [upsertUserGameSettings] = useMutation(UPSERT_USER_GAME_SETTINGS)
 
@@ -143,7 +148,7 @@ export const Success = ({ userGameSettings, cardLibrary }) => {
   const [showPersonalCardPool, setShowPersonalCardPool] = useState()
 
   return (
-    <div className="w-full">
+    <div className="w-full border-2 border-violet-700">
       <div className="w-full">
         <div className="inline-flex">
           <button
@@ -164,13 +169,13 @@ export const Success = ({ userGameSettings, cardLibrary }) => {
           </button>
         </div>
       </div>
-      {cardLibrary && userGameSettings && (
+      {/* {cardLibrary && userGameSettings && (
         <CardSettingsControlPanel
           cardSettings={convertedCardSettings}
           cardLibrary={cardLibrary}
           save={handleSave}
         />
-      )}
+      )} */}
     </div>
   )
 }

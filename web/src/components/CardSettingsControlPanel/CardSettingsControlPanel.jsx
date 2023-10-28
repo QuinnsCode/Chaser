@@ -76,7 +76,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
     const handleChangeSearch = (textValue) => {
       const lowerCase = textValue?.toLowerCase()
       const cards = [...checkState]?.map((card) => {
-        if (card.name?.toLowerCase().includes(lowerCase)) {
+        if (card.name?.toLowerCase()?.includes(lowerCase)) {
           return { ...card, isVisible: true }
         } else {
           return { ...card, isVisible: false }
@@ -296,12 +296,12 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                         <div className="mx-1 inline-flex text-center font-thin">
                           Add?
                         </div>
-                        {/* <input
+                        <input
                           id={'itemOnOff-' + card.id}
                           type={'checkbox'}
                           checked={card.isChecked}
                           className="shadow-md shadow-white"
-                        /> */}
+                        />
                       </button>
                     </div>
                   )}
