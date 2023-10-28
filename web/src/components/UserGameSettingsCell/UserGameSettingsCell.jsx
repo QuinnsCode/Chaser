@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { useMutation } from '@redwoodjs/web'
 
+import CardChooserView from 'src/components/CardChooserView/CardChooserView'
 import CardSettingsControlPanel from 'src/components/CardSettingsControlPanel/CardSettingsControlPanel'
 
 export const QUERY = gql`
@@ -103,7 +104,9 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ userGameSettingses, cardLibrary }) => {
-  // const convertedCardSettings = JSON.parse(userGameSettings[0]?.cardSettings)
+  const convertedCardSettings = userGameSettingses
+    ? JSON.parse(userGameSettingses[0]?.cardSettings)
+    : null
 
   const [upsertUserGameSettings] = useMutation(UPSERT_USER_GAME_SETTINGS)
 
@@ -166,6 +169,10 @@ export const Success = ({ userGameSettingses, cardLibrary }) => {
         </div>
       </div>
 
+      <CardChooserView
+        cardSettings={userGameSettingses}
+        cardLibrary={cardLibrary}
+      />
       {/* <CardSettingsControlPanel
         cardSettings={userGameSettingses}
         cardLibrary={cardLibrary}
