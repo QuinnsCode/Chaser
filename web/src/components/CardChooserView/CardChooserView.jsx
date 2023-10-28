@@ -6,17 +6,15 @@ const CardChooserView = ({ cardSettings, cardLibrary }) => {
 
   console.log({ cardSettings }, { cardLibrary })
 
-  console.log(
-    'CardSettingsControlPanel',
-    JSON.parse(cardSettings[0].cardSettings),
-    {
-      cardLibrary,
-    }
-  )
+  console.log('CardChooserView', JSON.parse(cardSettings[0].cardSettings), {
+    cardLibrary,
+  })
 
-  const alphabeticalCardLibrary = cardLibrary.sort((a, b) => {
-    const nameA = a.name.toUpperCase()
-    const nameB = b.name.toUpperCase()
+  const cardLibraryCopy = cardLibrary ? [...cardLibrary] : []
+
+  const alphabeticalCardLibrary = cardLibraryCopy.sort((a, b) => {
+    const nameA = a?.name?.toUpperCase()
+    const nameB = b?.name?.toUpperCase()
 
     if (nameA < nameB) {
       return -1
