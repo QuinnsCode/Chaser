@@ -101,7 +101,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
         )}
       </>
       <div className="w-full font-thin">Included cards:</div>
-      <hr />
+      <hr /> */}
       <button
         onClick={() => {
           allOff()
@@ -117,7 +117,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
         className={`rw-button m-1 inline-flex rounded-md border-2 border-solid bg-black text-white`}
       >
         All On
-      </button> */}
+      </button>
 
       {/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
 
@@ -173,34 +173,37 @@ export default CardSettingsControlPanel
 const ListCards = ({ checkState }) => {
   if (checkState) {
     console.log({ checkState })
-    // return (
-    //   <ul className="my-1.5 grid grid-cols-2 rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-3">
-    //     {checkState ? (
-    //       checkState?.map((card) => {
-    //         if (card?.isVisible) {
-    //           const borderColorString = card?.isChecked
-    //             ? 'border-green-600'
-    //             : 'border-red-600'
+    return (
+      <ul className="my-1.5 grid grid-cols-2 rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-3">
+        {checkState ? (
+          checkState?.map((card) => {
+            if (card?.isVisible) {
+              const borderColorString = card?.isChecked
+                ? 'border-green-600'
+                : 'border-red-600'
 
-    //           const innerBorderColorString = card?.isChecked
-    //             ? 'border-emerald-500'
-    //             : 'border-white'
+              const innerBorderColorString = card?.isChecked
+                ? 'border-emerald-500'
+                : 'border-white'
 
-    //           const bgColorString = card?.isChecked
-    //             ? 'bg-gradient-to-br from-slate-900 via-black to-green-900 hover:bg-gradient-to-br hover:from-black hover:via-emerald-900 hover:to-green-600'
-    //             : 'bg-gradient-to-br from-black via-black to-slate-700'
+              const bgColorString = card?.isChecked
+                ? 'bg-gradient-to-br from-slate-900 via-black to-green-900 hover:bg-gradient-to-br hover:from-black hover:via-emerald-900 hover:to-green-600'
+                : 'bg-gradient-to-br from-black via-black to-slate-700'
 
-    //           return <ListElement key={card} />
-    //         } else {
-    //           return <>No 2</>
-    //         }
-    //       })
-    //     ) : (
-    //       <></>
-    //     )}
-    //   </ul>
-    // )
-  } else return <></>
+              {
+                /* return <ListElement key={card} /> */
+              }
+              return <>Yayy</>
+            } else {
+              return <>No 2</>
+            }
+          })
+        ) : (
+          <></>
+        )}
+      </ul>
+    )
+  } else return <>No List Cards</>
 }
 
 const ListElement = ({ card, bgColorString }) => {
