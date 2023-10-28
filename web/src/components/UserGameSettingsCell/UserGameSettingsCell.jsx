@@ -104,7 +104,6 @@ export const Failure = ({ error }) => (
 
 export const Success = ({ userGameSettingses, cardLibrary }) => {
   // const convertedCardSettings = JSON.parse(userGameSettings[0]?.cardSettings)
-  // console.log({ convertedCardSettings })
 
   const [upsertUserGameSettings] = useMutation(UPSERT_USER_GAME_SETTINGS)
 
@@ -167,11 +166,11 @@ export const Success = ({ userGameSettingses, cardLibrary }) => {
         </div>
       </div>
 
-      <CardSettingsControlPanel
+      {/* <CardSettingsControlPanel
         cardSettings={userGameSettingses}
         cardLibrary={cardLibrary}
         save={handleSave}
-      />
+      /> */}
     </div>
   )
 }
