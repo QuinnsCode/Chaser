@@ -9,8 +9,6 @@ import UserGameSettingsImageHoverCell from 'src/components/UserGameSettingsImage
 //savedConfirmed comes from UserGamesSettingsCell
 
 const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
-  console.log({ cardLibrary }, { cardSettings })
-
   const [inputValue, setInputValue] = useState('')
   const [activeId, setActiveId] = useState('')
 

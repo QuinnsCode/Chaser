@@ -5,8 +5,8 @@ import { useMutation } from '@redwoodjs/web'
 import CardSettingsControlPanel from 'src/components/CardSettingsControlPanel/CardSettingsControlPanel'
 
 export const QUERY = gql`
-  query UserGameSettingsQuery {
-    userGameSettings: userGameSettingses {
+  query UserGameSettingseseseQuery {
+    userGameSettingses {
       id
       cardSettings
     }
@@ -102,15 +102,14 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ userGameSettings, cardLibrary }) => {
-  const convertedCardSettings = JSON.parse(userGameSettings[0]?.cardSettings)
+export const Success = ({ userGameSettingses, cardLibrary }) => {
+  // const convertedCardSettings = JSON.parse(userGameSettings[0]?.cardSettings)
+  // console.log({ convertedCardSettings })
 
   const [upsertUserGameSettings] = useMutation(UPSERT_USER_GAME_SETTINGS)
 
   const upsertUserSettings = async (cardSettingsString, userGameSettings) => {
-    console.log({ userGameSettings })
     const id = userGameSettings[0].id
-    console.log({ id })
     const str = cardSettingsString
     try {
       const result = await upsertUserGameSettings({
@@ -136,7 +135,7 @@ export const Success = ({ userGameSettings, cardLibrary }) => {
     console.log({ things }, 'success', JSON.stringify(things))
     const jsonStr = JSON.stringify(things)
     if (jsonStr) {
-      await upsertUserSettings(jsonStr, userGameSettings)
+      await upsertUserSettings(jsonStr, userGameSettingses)
     } else {
       return
     }
@@ -168,13 +167,11 @@ export const Success = ({ userGameSettings, cardLibrary }) => {
         </div>
       </div>
 
-      {convertedCardSettings && (
-        <CardSettingsControlPanel
-          cardSettings={convertedCardSettings}
-          cardLibrary={cardLibrary}
-          save={handleSave}
-        />
-      )}
+      <CardSettingsControlPanel
+        cardSettings={userGameSettingses}
+        cardLibrary={cardLibrary}
+        save={handleSave}
+      />
     </div>
   )
 }
