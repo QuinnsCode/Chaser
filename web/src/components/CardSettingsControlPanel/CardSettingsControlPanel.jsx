@@ -8,7 +8,15 @@ import UserGameSettingsImageHoverCell from 'src/components/UserGameSettingsImage
 //save comes from UserGamesSettingsCell
 //savedConfirmed comes from UserGamesSettingsCell
 
-const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
+const CardSettingsControlPanel = ({ cardSettings, cardLibrary, save }) => {
+  console.log(
+    'CardSettingsControlPanel',
+    JSON.parse(cardSettings[0].cardSettings),
+    {
+      cardLibrary,
+    }
+  )
+
   const [inputValue, setInputValue] = useState('')
   const [activeId, setActiveId] = useState('')
 
@@ -161,7 +169,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
       /> */}
       <div className="inline-flex font-thin text-white">{`Click eye to see what excluded cards are`}</div>
       <hr />
-      <ListCards checkState={checkState} />
+      {/* <ListCards checkState={checkState} /> */}
     </div>
   )
 }
