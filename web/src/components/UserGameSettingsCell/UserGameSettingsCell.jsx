@@ -85,7 +85,9 @@ export const Empty = ({ cardLibrary }) => {
         </div>
       </div>
       {cardLibrary ? (
-        <CardSettingsControlPanel cardLibrary={cardLibrary} save={handleSave} />
+        <>
+          {/* <CardSettingsControlPanel cardLibrary={cardLibrary} save={handleSave} /> */}
+        </>
       ) : (
         <></>
       )}

@@ -2,7 +2,7 @@ import UserGameSettingsCell from 'src/components/UserGameSettingsCell/UserGameSe
 
 export const QUERY = gql`
   query FindCards {
-    cardLibrary: planechaseCards {
+    planechaseCards {
       id
       name
     }
@@ -17,11 +17,11 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ cardLibrary }) => {
+export const Success = ({ planechaseCards }) => {
   //this loads in the default card library
   return (
     <div className="w-full">
-      <UserGameSettingsCell cardLibrary={cardLibrary} />
+      <UserGameSettingsCell cardLibrary={planechaseCards} />
     </div>
   )
 }

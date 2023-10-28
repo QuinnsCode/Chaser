@@ -91,9 +91,14 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
 
   return (
     <div className="h-full bg-black">
-      {activeId && (
-        <UserGameSettingsImageHoverCell id={activeId} closeMe={handleCloseMe} />
-      )}
+      <>
+        {activeId && (
+          <UserGameSettingsImageHoverCell
+            id={activeId}
+            closeMe={handleCloseMe}
+          />
+        )}
+      </>
       <div className="w-full font-thin">Included cards:</div>
       <hr />
       <button
@@ -154,7 +159,7 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
       <ul className="my-1.5 grid grid-cols-2 rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-3">
         {checkState ? (
           checkState?.map((card) => {
-            if (card.isVisible) {
+            if (card?.isVisible) {
               const borderColorString = card.isChecked
                 ? 'border-green-600'
                 : 'border-red-600'
@@ -252,37 +257,37 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                           id={'view-' + card.id}
                           className="px-1"
                         >
-                          <Tooltip
+                          {/* <Tooltip
                             text={'Show ' + card.name}
                             leftRightAboveBelow={'right'}
+                          > */}
+                          <svg
+                            fill="#ffffff"
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 32 32"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            stroke="#ffffff"
                           >
-                            <svg
-                              fill="#ffffff"
-                              width="20px"
-                              height="20px"
-                              viewBox="0 0 32 32"
-                              version="1.1"
-                              xmlns="http://www.w3.org/2000/svg"
-                              stroke="#ffffff"
-                            >
-                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                              <g
-                                id="SVGRepo_tracerCarrier"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              ></g>
-                              <g id="SVGRepo_iconCarrier">
-                                <title>open-eye</title>
-                                <path d="M0 16q0.064 0.192 0.192 0.512t0.576 1.248 0.992 1.888 1.344 2.176 1.792 2.368 2.144 2.176 2.592 1.888 2.976 1.248 3.392 0.512q2.208 0 4.288-0.768t3.616-2.016 2.912-2.72 2.304-3.008 1.6-2.72 0.96-1.984l0.32-0.8q-0.064-0.16-0.192-0.48t-0.576-1.28-0.992-1.856-1.344-2.208-1.792-2.336-2.144-2.176-2.56-1.888-3.008-1.28-3.392-0.48q-2.208 0-4.288 0.768t-3.616 2.016-2.912 2.72-2.304 2.976-1.6 2.72-0.96 2.016zM6.016 16q0-2.72 1.344-5.024t3.616-3.616 5.024-1.344q2.048 0 3.872 0.8t3.2 2.112 2.144 3.2 0.8 3.872q0 2.72-1.344 5.024t-3.648 3.648-5.024 1.344q-2.016 0-3.872-0.8t-3.2-2.144-2.144-3.168-0.768-3.904zM10.016 16q0 2.496 1.728 4.256t4.256 1.76 4.256-1.76 1.76-4.256-1.76-4.224-4.256-1.76q-0.96 0-1.984 0.352v3.648h-3.648q-0.352 0.992-0.352 1.984z"></path>{' '}
-                              </g>
-                            </svg>
-                          </Tooltip>
+                            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                            <g
+                              id="SVGRepo_tracerCarrier"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            ></g>
+                            <g id="SVGRepo_iconCarrier">
+                              <title>open-eye</title>
+                              <path d="M0 16q0.064 0.192 0.192 0.512t0.576 1.248 0.992 1.888 1.344 2.176 1.792 2.368 2.144 2.176 2.592 1.888 2.976 1.248 3.392 0.512q2.208 0 4.288-0.768t3.616-2.016 2.912-2.72 2.304-3.008 1.6-2.72 0.96-1.984l0.32-0.8q-0.064-0.16-0.192-0.48t-0.576-1.28-0.992-1.856-1.344-2.208-1.792-2.336-2.144-2.176-2.56-1.888-3.008-1.28-3.392-0.48q-2.208 0-4.288 0.768t-3.616 2.016-2.912 2.72-2.304 2.976-1.6 2.72-0.96 2.016zM6.016 16q0-2.72 1.344-5.024t3.616-3.616 5.024-1.344q2.048 0 3.872 0.8t3.2 2.112 2.144 3.2 0.8 3.872q0 2.72-1.344 5.024t-3.648 3.648-5.024 1.344q-2.016 0-3.872-0.8t-3.2-2.144-2.144-3.168-0.768-3.904zM10.016 16q0 2.496 1.728 4.256t4.256 1.76 4.256-1.76 1.76-4.256-1.76-4.224-4.256-1.76q-0.96 0-1.984 0.352v3.648h-3.648q-0.352 0.992-0.352 1.984z"></path>{' '}
+                            </g>
+                          </svg>
+                          {/* </Tooltip> */}
                         </button>
                       </div>
                       <button
                         onClick={() => {
-                          //"itemOnOff-" is the start of the string -> slice 10 off start, check for null id
                           if (card.id) {
+                            //"itemOnOff-" is the start of the string -> slice 10 off start, check for null id
                             handleOnOffCard(card.id)
                           }
                         }}
@@ -291,12 +296,12 @@ const CardSettingsControlPanel = ({ cardLibrary, cardSettings, save }) => {
                         <div className="mx-1 inline-flex text-center font-thin">
                           Add?
                         </div>
-                        <input
+                        {/* <input
                           id={'itemOnOff-' + card.id}
                           type={'checkbox'}
                           checked={card.isChecked}
                           className="shadow-md shadow-white"
-                        />
+                        /> */}
                       </button>
                     </div>
                   )}

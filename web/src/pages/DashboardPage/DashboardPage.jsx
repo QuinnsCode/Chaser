@@ -51,7 +51,7 @@ const DashboardPage = () => {
                   </button>
                 )}
               </div>
-              {/* <div className="w-full">
+              <div className="w-full">
                 {!showCardSettings ? (
                   <div className="rounded-2xl border-2 border-white px-1 py-2">
                     <CardSettings />
@@ -59,7 +59,7 @@ const DashboardPage = () => {
                 ) : (
                   <></>
                 )}
-              </div> */}
+              </div>
             </li>
             <hr />
             <li className="w-full hover:bg-gray-900">Friends List</li>
