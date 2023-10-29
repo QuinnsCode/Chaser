@@ -172,6 +172,7 @@ export const Success = ({ userGameSettingses, cardLibrary }) => {
       <CardChooserView
         cardSettings={userGameSettingses}
         cardLibrary={cardLibrary}
+        save={handleSave}
       />
       {/* <CardSettingsControlPanel
         cardSettings={userGameSettingses}
