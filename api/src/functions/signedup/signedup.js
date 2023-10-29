@@ -66,13 +66,11 @@ export const handler = async (event) => {
 
       if (eyedee != null) {
         returnMessage = eyedee
-        await db.clerkUser.create({
+        await db.user.create({
           data: {
-            clerkUserId: eyedee,
+            thirdPartyID: eyedee,
             email: eeemail,
             firstName: first,
-            roles: ['default'],
-            savedData: JSON.stringify({ data: 'hello world' }),
           },
         })
 

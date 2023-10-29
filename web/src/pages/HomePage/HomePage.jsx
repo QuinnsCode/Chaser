@@ -22,15 +22,16 @@ const HomePage = () => {
                 <div className="w-full">
                   <div className="inline-flex"></div>
                   <div className="inline-flex"></div>
-                  <div className="inline-flex"></div>Use in top right to
-                  continue!
+                  <div className="inline-flex"></div>Use Menu button up in
+                  top-right to continue!
                 </div>
               </div>
             </>
           ) : (
             <>
               <div className="h-screen w-full">
-                Hi there, you can use Sign Up/ Sign In in top right to continue
+                <p>Hi there,</p>
+                <p>you can use Sign Up/ Sign In in top right to continue</p>
               </div>
             </>
           )}

@@ -182,7 +182,7 @@ export default CardChooserView
 const ListCards = ({ checkState, handleOnOffCard, handleSetActiveCard }) => {
   if (checkState) {
     return (
-      <ul className="my-1.5 grid grid-cols-2 rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-3">
+      <ul className="my-1.5 grid grid-cols-2 items-center rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-3">
         {checkState ? (
           checkState?.map((card) => {
             if (card?.isVisible) {
