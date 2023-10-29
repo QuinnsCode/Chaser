@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+import UserGameSettingsImageHoverCell from 'src/components/UserGameSettingsImageHoverCell/UserGameSettingsImageHoverCell'
+
 //this takes in user settings cards and the default list of all cards, the save passes up a signal to save
 const CardChooserView = ({ cardSettings, cardLibrary, save }) => {
   //make sure it goes to being an array if empty so spread is fine down the line
@@ -96,10 +98,10 @@ const CardChooserView = ({ cardSettings, cardLibrary, save }) => {
         {activeId && (
           <>
             HOVER CELL
-            {/* <UserGameSettingsImageHoverCell
+            <UserGameSettingsImageHoverCell
               id={activeId}
               closeMe={handleCloseMe}
-            /> */}
+            />
           </>
         )}
       </>
@@ -166,21 +168,32 @@ const CardChooserView = ({ cardSettings, cardLibrary, save }) => {
       />
       <div className="inline-flex font-thin text-white">{`Click eye to see what excluded cards are`}</div>
       <hr />
-      <ListCards checkState={checkState} />
+      <ListCards
+        checkState={checkState}
+        handleOnOffCard={handleOnOffCard}
+        handleSetActiveCard={setActiveId}
+      />
     </div>
   )
 }
 
 export default CardChooserView
 
-const ListCards = ({ checkState }) => {
+const ListCards = ({ checkState, handleOnOffCard, handleSetActiveCard }) => {
   if (checkState) {
     return (
       <ul className="my-1.5 grid grid-cols-2 rounded-2xl border-2 border-solid border-white pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-3">
         {checkState ? (
           checkState?.map((card) => {
             if (card?.isVisible) {
-              return <ListElement key={card} card={card} />
+              return (
+                <ListElement
+                  key={card.id}
+                  card={card}
+                  handleOnOffCard={handleOnOffCard}
+                  handleSetActiveCard={handleSetActiveCard}
+                />
+              )
             } else {
               return <></>
             }
@@ -193,7 +206,7 @@ const ListCards = ({ checkState }) => {
   } else return <></>
 }
 
-const ListElement = ({ card }) => {
+const ListElement = ({ card, handleOnOffCard, handleSetActiveCard }) => {
   const borderColorString = card?.isChecked
     ? 'border-green-600'
     : 'border-red-600'
@@ -208,7 +221,7 @@ const ListElement = ({ card }) => {
 
   return (
     <li
-      key={card.id}
+      key={card.id + '-cardchooserview'}
       className={`w-full rounded-lg ${
         card?.isChecked ? bgColorString : 'border-white'
       }`}
@@ -216,7 +229,7 @@ const ListElement = ({ card }) => {
       {card?.isChecked ? (
         <>
           <div
-            className={`h-full w-full border-2 border-solid ${borderColorString} rounded-md py-3`}
+            className={`h-full w-full justify-center border-2 border-solid ${borderColorString} rounded-md py-3`}
           >
             <div
               className={`inline-flex h-full w-2/3 items-center rounded-md border border-solid ${innerBorderColorString} font-thin`}
@@ -240,13 +253,17 @@ const ListElement = ({ card }) => {
               }}
               className="inline-flex h-full w-1/4 items-center"
             >
-              <div className="mx-1 inline-flex text-center font-thin">Add?</div>
-              <input
+              {card.isChecked && (
+                <div className="mx-1 inline-flex text-center font-thin">
+                  Add?
+                </div>
+              )}
+              {/* <input
                 id={'itemOnOff-' + card.id}
                 type={'checkbox'}
-                checked={card.isChecked}
+                defaultChecked={card.isChecked}
                 className="shadow-md shadow-white"
-              />
+              /> */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -285,7 +302,7 @@ const ListElement = ({ card }) => {
               <button
                 onClick={() => {
                   if (card.id) {
-                    setActiveId(card.id)
+                    handleSetActiveCard(card.id)
                   }
                 }}
                 id={'view-' + card.id}
@@ -322,12 +339,12 @@ const ListElement = ({ card }) => {
               className="inline-flex h-full w-1/4 items-center"
             >
               <div className="mx-1 inline-flex text-center font-thin">Add?</div>
-              <input
+              {/* <input
                 id={'itemOnOff-' + card.id}
                 type={'checkbox'}
-                checked={card.isChecked}
+                defaultChecked={card.isChecked}
                 className="shadow-md shadow-white"
-              />
+              /> */}
             </button>
           </div>
         </>

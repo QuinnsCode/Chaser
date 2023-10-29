@@ -20,7 +20,7 @@ export const Failure = ({ error }) => (
 export const Success = ({ planechaseCards }) => {
   //this loads in the default card library
   return (
-    <div className="w-full border-2 border-yellow-600">
+    <div className="w-full">
       <UserGameSettingsCell cardLibrary={planechaseCards} />
     </div>
   )

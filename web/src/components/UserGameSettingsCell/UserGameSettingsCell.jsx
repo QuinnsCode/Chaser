@@ -147,7 +147,7 @@ export const Success = ({ userGameSettingses, cardLibrary }) => {
   const [showPersonalCardPool, setShowPersonalCardPool] = useState()
 
   return (
-    <div className="w-full border-2 border-violet-700">
+    <div className="w-full">
       <div className="w-full">
         <div className="inline-flex">
           <button
