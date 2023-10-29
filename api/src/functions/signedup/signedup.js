@@ -71,6 +71,7 @@ export const handler = async (event) => {
             thirdPartyID: eyedee,
             email: eeemail,
             firstName: first,
+            username: '',
           },
         })
 
