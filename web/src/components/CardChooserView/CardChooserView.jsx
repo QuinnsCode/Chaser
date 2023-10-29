@@ -89,8 +89,79 @@ const CardChooserView = ({ cardSettings, cardLibrary }) => {
   }, [inputValue])
 
   return (
-    <div>
-      <h2>{'CardChooserView'}</h2>
+    <div className="h-full bg-black">
+      {/* <>
+      {activeId && (
+        <UserGameSettingsImageHoverCell
+          id={activeId}
+          closeMe={handleCloseMe}
+        />
+      )}
+    </>
+    <div className="w-full font-thin">Included cards:</div>
+    <hr /> */}
+      <button
+        onClick={() => {
+          allOff()
+        }}
+        className={`rw-button m-1 inline-flex rounded-md border-2 border-solid bg-black text-white`}
+      >
+        All Off
+      </button>
+      <button
+        onClick={() => {
+          allOn()
+        }}
+        className={`rw-button m-1 inline-flex rounded-md border-2 border-solid bg-black text-white`}
+      >
+        All On
+      </button>
+
+      {/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
+
+      {/* {!isSaving ? (
+      <button
+        onClick={() => {
+          const filtered = [...checkState]?.filter((card) => {
+            return card.isChecked
+          })
+
+          save(filtered)
+        }}
+        className={`rw-button m-1 inline-flex rounded-md border-2 border-solid bg-black text-white`}
+      >
+        Save
+      </button>
+    ) : (
+      <button
+        aria-disabled
+        className={`rw-button m-1 inline-flex rounded-md border-2 border-solid bg-black text-white`}
+      >
+        Saving
+      </button>
+    )} */}
+
+      {/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
+
+      <button
+        onClick={() => {
+          setCheckState(defaultCardList)
+        }}
+        className={`rw-button m-1 inline-flex rounded-md border-2 border-solid bg-black text-white`}
+      >
+        Default Cardlist
+      </button>
+      <hr />
+      <div className="inline-flex text-white">Search:</div>
+      {/* <input
+      onChange={(e) => {
+        setInputValue(e.target.value)
+      }}
+      className="m-1 inline-flex pl-1.5 text-black"
+    /> */}
+      <div className="inline-flex font-thin text-white">{`Click eye to see what excluded cards are`}</div>
+      <hr />
+      {/* <ListCards checkState={checkState} /> */}
     </div>
   )
 }
