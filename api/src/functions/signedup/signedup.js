@@ -58,6 +58,8 @@ export const handler = async (event) => {
       // returnMessage = 'Received, made through to data access: email'
 
       const first = payload?.data?.first_name
+
+      const userName = payload?.data?.username
       // returnMessage = 'Received, made through to data access'
 
       // if (eyedee == null) {
@@ -71,7 +73,7 @@ export const handler = async (event) => {
             thirdPartyID: eyedee,
             email: eeemail,
             firstName: first,
-            username: '',
+            username: userName,
           },
         })
 
