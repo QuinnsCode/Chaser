@@ -7,6 +7,10 @@ const Game = () => {
   const [cardPool, setCardPool] = useState()
   const [randomCardIndex, setRandomCardIndex] = useState()
   const [cardQueue, setCardQueue] = useState()
+  const [isRotated, setIsRotated] = useState()
+
+  const [showChaosText, setShowChaosText] = useState(false)
+  const [showPlaneText, setShowPlaneText] = useState(false)
 
   const handleReturnedCards = (cards) => {
     if (cards) {
@@ -125,6 +129,18 @@ const Game = () => {
       return
     }
   }
+  const handleRotate = () => {
+    setIsRotated(!isRotated)
+  }
+
+  const handleChangeChaosText = () => {
+    setShowChaosText(!showChaosText)
+    setShowPlaneText(false)
+  }
+  const handleChangePlaneText = () => {
+    setShowPlaneText(!showPlaneText)
+    setShowChaosText(false)
+  }
 
   useEffect(() => {
     if (cardPool?.length) {
@@ -141,13 +157,31 @@ const Game = () => {
       {cardPool ? (
         <div className="inline=flex my-1 w-full items-center rounded-2xl text-center">
           <div className="inline-flex w-full items-center text-center">
-            <div className="w-1/2 items-center text-center">
+            <div className="w-1/3 items-center text-center">
               <button
                 onClick={() => goToNextPlane()}
                 className="rw-button inline-flex items-center bg-black px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
               >{`<< Prev`}</button>
             </div>
-            <div className="w-1/2 p-1 text-center">
+            <div className="w-1/3 items-center text-center">
+              {isRotated ? (
+                <button
+                  onClick={() => handleRotate()}
+                  className="rw-button inline-flex items-center bg-black px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
+                >
+                  Rotate
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleRotate()}
+                  className="rw-button inline-flex items-center bg-black px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
+                >
+                  UnRotate
+                </button>
+              )}
+            </div>
+
+            <div className="w-1/3 p-1 text-center">
               <button
                 onClick={() => {
                   goToNextPlane(
@@ -160,13 +194,73 @@ const Game = () => {
               >{`Next >>`}</button>
             </div>
           </div>
-          <div className="inline-flex w-full rounded-md p-1">
+          <div className="w-full items-center text-center">
+            {showChaosText ? (
+              <button
+                onClick={() => handleChangeChaosText()}
+                className="rw-button mx-1 inline-flex items-center rounded-md border-2 border-solid border-white bg-gray-700 px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
+              >
+                Close Chaos Text
+              </button>
+            ) : (
+              <button
+                onClick={() => handleChangeChaosText()}
+                className="rw-button mx-1 inline-flex items-center rounded-md border-2 border-solid border-white bg-black px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
+              >
+                Chaos Text
+              </button>
+            )}
+            {showPlaneText ? (
+              <button
+                onClick={() => handleChangePlaneText()}
+                className="rw-button mx-1 inline-flex items-center rounded-md border-2 border-solid border-white bg-gray-700 px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
+              >
+                Close Plane Text
+              </button>
+            ) : (
+              <button
+                onClick={() => handleChangePlaneText()}
+                className="rw-button mx-1 inline-flex items-center rounded-md border-2 border-solid border-white bg-black px-4 py-1 text-center font-thin text-white hover:bg-gray-600"
+              >
+                Plane Text
+              </button>
+            )}
+          </div>
+          <div className="my-1 w-full">
+            {showPlaneText ? (
+              <div className="rounded-lg border-2 border-solid border-white p-2 text-white">
+                {cardPool[randomCardIndex?.now]?.abilityDescription}
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="my-1 w-full">
+            {showChaosText ? (
+              <div className="rounded-lg border-2 border-solid border-white p-2 text-white">
+                {cardPool[randomCardIndex?.now]?.chaosAbilityDescription}
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="inline-flex w-full items-center rounded-md p-1">
             <div className="my-2 inline-flex h-[42rem] w-full content-center items-center justify-center rounded-md pb-12 text-center align-middle shadow-2xl shadow-pink-700">
-              <img
-                src={cardPool[randomCardIndex?.now]?.image?.encodedString}
-                alt={cardPool[randomCardIndex?.now]?.id}
-                className="m-2 max-h-full rotate-0 rounded-md border-2 border-white shadow-2xl shadow-orange-400 ring-4 ring-pink-400 ring-opacity-40 sm:rotate-0 md:rotate-90 lg:rotate-90 xl:rotate-90 2xl:rotate-90"
-              />
+              {isRotated ? (
+                <img
+                  src={cardPool[randomCardIndex?.now]?.image?.encodedString}
+                  alt={cardPool[randomCardIndex?.now]?.id}
+                  style={{ width: '100vh', maxWidth: '70%' }}
+                  className="m-2 mx-auto max-h-full rotate-0 rounded-md border-2 border-white shadow-2xl shadow-orange-400 ring-4 ring-pink-400 ring-opacity-40 sm:rotate-0 md:rotate-90 lg:rotate-90 xl:rotate-90 2xl:rotate-90"
+                />
+              ) : (
+                <img
+                  src={cardPool[randomCardIndex?.now]?.image?.encodedString}
+                  alt={cardPool[randomCardIndex?.now]?.id}
+                  style={{ width: '100vh', maxWidth: '70%' }}
+                  className="m-2 mx-auto max-h-full rotate-90 rounded-md border-2 border-white shadow-2xl shadow-orange-400 ring-4 ring-pink-400 ring-opacity-40 sm:rotate-0 md:rotate-0 lg:rotate-0 xl:rotate-0 2xl:rotate-0"
+                />
+              )}
             </div>
           </div>
         </div>
